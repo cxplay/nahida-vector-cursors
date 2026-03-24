@@ -1,5 +1,7 @@
 # 纳西妲概念矢量指针
 
+![banner](./assets/og-banner.webp)
+
 一套以纳西妲的概念元素为灵感设计的指针资源, 以 Windows 为目标平台适配.
 
 > 相关讨论: [直接使用矢量资源的指针方案的可能性 · Issue \#11 · SamToki/Sam-Toki-Mouse-Cursors][pre-discussion]
