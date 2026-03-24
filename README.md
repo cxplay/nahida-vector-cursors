@@ -2,6 +2,8 @@
 
 一套以纳西妲的概念元素为灵感设计的指针资源, 以 Windows 为目标平台适配.
 
+> 相关讨论: [直接使用矢量资源的指针方案的可能性 · Issue \#11 · SamToki/Sam-Toki-Mouse-Cursors][pre-discussion]
+
 > 以下为 Windows 矢量指针资源预览 (原始资源为垂直翻转).
 
 |                           正常选择                           |                           文本选择                           |                           链接选择                           |                              忙                              |
@@ -90,5 +92,6 @@ Copy-Item .\windows\* C:\Windows\Cursors
 
 项目部分指针设计来自 [SamToki/Sam-Toki-Mouse-Cursors][2], 本项目设计资产在 [CC BY-NC-SA 4.0](./LICENCE.txt) 许可下重新发行.
 
-[2]: https://github.com/SamToki/Sam-Toki-Mouse-Cursors
 [1]: https://github.com/M2Team/NanaRun
+[2]: https://github.com/SamToki/Sam-Toki-Mouse-Cursors
+[pre-discussion]: https://github.com/SamToki/Sam-Toki-Mouse-Cursors/issues/11
