@@ -8,20 +8,20 @@
 
 > 以下为 Windows 矢量指针资源预览 (原始资源为垂直翻转).
 
-|                           正常选择                           |                           文本选择                           |                           链接选择                           |                              忙                              |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| 正常选择 | 文本选择 | 链接选择 | 忙 |
+| :------: | :------: | :------: | :-: |
 | <img src="./windows/arrow.svg" alt="正常选择" title="正常选择" style="transform: scaleY(-1); cursor: default;"> | <img src="./windows/ibeam.svg" alt="文本选择" title="文本选择" style="transform: scaleY(-1); cursor: text;"> | <img src="./windows/link.svg" alt="链接选择" title="链接选择" style="transform: scaleY(-1); cursor: pointer;"> | <img src="./windows/wait.svg" alt="忙" title="忙" style="transform: scaleY(-1); cursor: wait;"> |
 
-|                         垂直调整大小                         |                         水平调整大小                         |                      沿对角线调整大小1                       |                      沿对角线调整大小2                       |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| 垂直调整大小 | 水平调整大小 | 沿对角线调整大小1 | 沿对角线调整大小2 |
+| :----------: | :----------: | :---------------: | :---------------: |
 | <img src="./windows/ns.svg" alt="垂直调整大小" title="垂直调整大小" style="transform: scaleY(-1); cursor: n-resize;"> | <img src="./windows/ew.svg" alt="水平调整大小" title="水平调整大小" style="transform: scaleY(-1); cursor: ew-resize;"> | <img src="./windows/nwse.svg" alt="沿对角线调整大小1" title="沿对角线调整大小1" style="transform: scaleY(-1); cursor: nw-resize;"> | <img src="./windows/nesw.svg" alt="沿对角线调整大小2" title="沿对角线调整大小2" style="transform: scaleY(-1); cursor: ne-resize;"> |
 
 | 移动 | 不可用 | 精确选择 | 备用选择 | 笔 |
-|:-:   |:-:     |:-:       |:-: |:-:       |
+| :--: | :----: | :------: | :------: | :-: |
 |<img src="./windows/move.svg" alt="移动" title="移动" style="transform: scaleY(-1); cursor: move;">|<img src="./windows/unavail.svg" alt="不可用" title="不可用" style="transform: scaleY(-1); cursor: no-drop;">|<img src="./windows/cross.svg" alt="精确选择" title="精确选择" style="transform: scaleY(-1); cursor: crosshair;">|<img src="./windows/up.svg" alt="备用选择" title="备用选择" style="transform: scaleY(-1);">|<img src="./windows/pen.svg" alt="笔" title="笔" style="transform: scaleY(-1);">|
 
 | 在后台工作 | 帮助选择 | 位置选择 | 个人选择 |
-|:-:           |:-:           |:-:                |:-:                |
+| :--------: | :------: | :------: | :------: |
 |<img src="./windows/busy.svg" alt="在后台工作" title="在后台工作" style="transform: scaleY(-1); cursor: progress;">|<img src="./windows/helpsel.svg" alt="帮助选择" title="帮助选择" style="transform: scaleY(-1); cursor: help;">|<img src="./windows/pin.svg" alt="位置选择" title="位置选择" style="transform: scaleY(-1);">|<img src="./windows/person.svg" alt="个人选择" title="个人选择" style="transform: scaleY(-1);">|
 
 ## 安装方式
@@ -33,7 +33,7 @@
 > [!NOTE]
 > 虽然可以强行将这些待替换的资源文件的所有者修改为 `Administrator` 用户组, 但无法保证系统文件权限被破坏的情况下一定不会对未来的系统运行造成影响.
 
-### 获取资源
+### 1. 获取资源
 
 打开 PowerShell 运行以下命令获取最新指针资源:
 
@@ -45,7 +45,18 @@ Remove-Item windows.zip
 
 最新的指针资源将会解压到 windows 文件夹中.
 
-### 提权会话
+### 2. 备份资源
+
+为了便于未来取消安装, 建议将系统默认指针资源备份到本地一次.
+
+PowerShell 运行以下命令将默认指针资源复制到 windows-vector-cursors-original 文件夹:
+
+```powershell
+New-Item windows-vector-cursors-original -ItemType Directory; `
+Copy-Item C:\Windows\Cursors\*.svg .\windows-vector-cursors-original\
+```
+
+### 3. 提权会话
 
 在本例中, 我们将会使用开源提权工具 [NanaRun][1] 进行权限提升.
 
@@ -78,7 +89,7 @@ whoami
 nt authority\system
 ```
 
-### 替换指针
+### 4. 替换指针
 
 在提权会话下, 运行以下命令将已解压的指针资源复制到 `C:\Windows\Cursors` 目录, 替换同名资源:
 
@@ -86,9 +97,19 @@ nt authority\system
 Copy-Item .\windows\* C:\Windows\Cursors
 ```
 
-### 刷新指针
+### 5. 刷新指针
 
 打开 Windows 设置中的 “辅助功能” - “鼠标指针与触控”, 在 "鼠标指针样式" 选项中切换一次指针样式刷新资源, 并确保指针 "大小" 滑块已经设置为 2 倍或以上缩放尺寸.
+
+## 取消安装
+
+取消安装只需要将原始的 Windows 矢量指针资源覆盖回 `C:\Windows\Cursors` 目录即可.
+
+如果已经按照上一节中的方式备份了 Windows 原始指针资源到 windows-vector-cursors-original 文件夹, 那么提权到 `TrustedInstaller` 身份的 PowerShell 会话后运行以下命令即可:
+
+```powershell
+Copy-Item .\windows-vector-cursors-original\*.svg C:\Windows\Cursors
+```
 
 ## 版权许可
 
